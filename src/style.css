@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "tailwindcss";
+
+@theme {
+    --font-figtree: "Figtree", sans-serif; 
+    --font-poppins: "Poppins", sans-serif;
+  }
+
+  body {
+    overscroll-behavior-y: none;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  :root {
+    --color-bg:#FBFBF7;
+    --color-surface:#FFFFFF;
+    --color-surface-alt:#F3F7F5;
+    --color-border:#D2DEE4;
+    --color-border-strong:#98B3C2;
+    --color-primary:#003056;
+    --color-primary-hover:#00263F;
+    --color-accent:#D8EFE3;
+    --color-accent-border:#B7E0CE;
+    --color-text:#0f2a36;
+    --color-text-soft:#345566;
+    --color-text-mute:#5c7683;
+    --color-danger:#C62828;
+    --color-danger-hover:#A71F1F;
+    --color-success-bg:#BEEFDA;
+    --color-success-text:#0E5A37;
+    --focus-ring:0 0 0 3px rgba(0,48,86,.35);
+    font-family: system-ui, sans-serif;
+  }
+  
+  .font-figtree {
+    font-family:'Figtree', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+  .font-poppins {
+    font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",Arial,sans-serif;
+  }
+  
+  .btn {
+    font:inherit;
+    cursor:pointer;
+    border-radius:6px;
+    border:1px solid var(--color-primary);
+    background:var(--color-primary);
+    color:#fff;
+    padding:.5rem .85rem;
+    font-size:.75rem;
+    font-weight:600;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    transition:background .2s, box-shadow .2s;
+  }
+  .btn:hover { background:var(--color-primary-hover); }
+  .btn:focus-visible { outline:none; box-shadow:var(--focus-ring); }
+  .btn.secondary {
+    background:var(--color-accent);
+    color:var(--color-primary);
+    border-color:var(--color-accent-border);
+  }
+  .btn.secondary:hover {
+    filter:brightness(.95);
+  }
+  .status-chip {
+    padding:0.15rem 0.5rem;
+    border-radius:12px;
+    font-size:.6rem;
+    font-weight:600;
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    display:inline-block;
+    line-height:1.1;
+  }
+  .status-chip.draft {
+    background:#FFE7C2;
+    color:#6A4100;
+  }
+  .status-chip.published {
+    background:var(--color-success-bg);
+    color:var(--color-success-text);
+  }
+  .table-basic {
+    width:100%;
+    border-collapse:collapse;
+    background:var(--color-surface);
+    font-size:.85rem;
+  }
+  .table-basic th,
+  .table-basic td {
+    padding:0.55rem 0.7rem;
+    border-bottom:1px solid var(--color-border);
+    text-align:left;
+  }
+  .table-basic tbody tr:hover {
+    background:var(--color-surface-alt);
+  }
+  .link-inline {
+    color:var(--color-primary);
+    text-decoration:none;
+    font-weight:500;
+  }
+  .link-inline:hover { text-decoration:underline; }
+  .input-check[disabled] {
+    opacity:.45;
+    cursor:not-allowed;
+  }
+  .badge-pinned {
+    background:var(--color-primary);
+    color:#fff;
+    border-radius:999px;
+    font-size:.55rem;
+    font-weight:600;
+    letter-spacing:.75px;
+    padding:.25rem .5rem;
+    text-transform:uppercase;
+  }
