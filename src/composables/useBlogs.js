@@ -6,7 +6,8 @@ import {
   deleteBlog,
   getBlogBySlug,
   listPublishedBlogs,
-  updateBlogSelection
+  updateBlogSelection,
+  unpublishBlog
 } from '../services/blogServices'
 
 const ownBlogs = ref([])
@@ -39,18 +40,38 @@ export function useBlogs() {
     }
   }
 
-  async function save(blogData, { publishNow = false } = {}) {
+  async function save(blogData, { publishNow = false, toBePublishedDate = null } = {}) {
     loading.value = true
     error.value = null
     try {
-      const saved = await saveBlog(blogData, { publishNow })
+      const saved = await saveBlog(blogData, { publishNow, toBePublishedDate })
       currentBlog.value = saved
       const idx = ownBlogs.value.findIndex(b => b.id === saved.id)
       if (idx !== -1) {
-        // replace object to ensure reactivity
         ownBlogs.value[idx] = { ...ownBlogs.value[idx], ...saved }
       }
       return saved
+    } catch (e) {
+      error.value = e.message
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function unpublish(id) {
+    loading.value = true
+    error.value = null
+    try {
+      const unpublished = await unpublishBlog(id)
+      const idx = ownBlogs.value.findIndex(b => b.id === id)
+      if (idx !== -1) {
+        ownBlogs.value[idx] = { ...ownBlogs.value[idx], ...unpublished }
+      }
+      if (currentBlog.value?.id === id) {
+        currentBlog.value = { ...currentBlog.value, ...unpublished }
+      }
+      return unpublished
     } catch (e) {
       error.value = e.message
       throw e
@@ -81,7 +102,6 @@ export function useBlogs() {
     const oldValue = target?.selection ?? false
     const nextValue = (typeof explicitValue === 'boolean') ? explicitValue : !oldValue
 
-    // Optimistic update
     if (target) {
       ownBlogs.value[targetIndex] = { ...target, selection: nextValue }
     }
@@ -93,7 +113,6 @@ export function useBlogs() {
       const updated = await updateBlogSelection(id, nextValue)
       return updated
     } catch (e) {
-      // revert
       if (target) {
         ownBlogs.value[targetIndex] = { ...target, selection: oldValue }
       }
@@ -113,6 +132,7 @@ export function useBlogs() {
     refreshOwn,
     loadBlog,
     save,
+    unpublish,
     remove,
     setBlogAsSelection,
     getBlogBySlug,

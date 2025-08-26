@@ -117,7 +117,7 @@ export default {
     data() {
         return {
             heroDescription: 'Manage teams, track attendance, and unlock smarter decisions — all from one intuitive dashboard.',
-            dashboardVideo: '', //'https://zaprityeqntbqbspwbeq.supabase.co/storage/v1/object/public/blog-media/854315-hd_1920_1080_25fps.mp4',
+            dashboardVideo: 'https://zaprityeqntbqbspwbeq.supabase.co/storage/v1/object/public/blog-media/854315-hd_1920_1080_25fps.mp4',
             dashboardVideoAlt: 'Dashboard Preview'
         };
     },
