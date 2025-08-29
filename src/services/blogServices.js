@@ -9,7 +9,8 @@ export async function saveBlog(data, { publishNow = false, toBePublishedDate = n
   const base = {
     title: data.title?.trim(),
     body: data.body || '',
-    template: data.template || 'basic'
+    template: data.template || 'basic',
+    block_template_id: data.block_template_id || null
   }
 
   if (!base.title) throw new Error('Title is required')
@@ -19,24 +20,40 @@ export async function saveBlog(data, { publishNow = false, toBePublishedDate = n
     cover_url = await uploadCover(data.coverFile, user.id, data.id)
   }
 
-  const status = publishNow ? 'published' : (data.status || 'draft')
-  const published_at = (publishNow && data.status !== 'published')
-    ? new Date().toISOString()
-    : data.published_at || null
+  let status
+  if (publishNow) {
+    status = 'published'
+  } else if (toBePublishedDate) {
+    status = 'draft'
+  } else {
+    status = data.status || 'draft'
+  }
+
+  let published_at
+  if (publishNow) {
+    published_at = data.published_at || new Date().toISOString()
+  } else if (toBePublishedDate) {
+    published_at = null
+  } else {
+    published_at = data.published_at || null
+  }
 
   const to_be_published_date = toBePublishedDate || data.to_be_published_date || null
 
   if (!data.id) {
-    let slug = slugify(base.title)
-    slug = await ensureUniqueSlug(slug)
+    let baseSlug = slugify(base.title)
+    baseSlug = await ensureUniqueSlug(baseSlug)
     const insertPayload = {
-      ...base,
-      slug,
+      title: base.title,
+      body: base.body,
+      slug: baseSlug,
+      template: base.template,
       cover_url,
       author_id: user.id,
       status,
       published_at,
-      to_be_published_date
+      to_be_published_date,
+      block_template_id: base.block_template_id
     }
     const { data: inserted, error } = await supabase
       .from('blogs')
@@ -45,7 +62,6 @@ export async function saveBlog(data, { publishNow = false, toBePublishedDate = n
       .single()
     if (error) throw error
     
-    // New blocks (initial insert)
     if (Array.isArray(data.blocks) && data.blocks.length) {
       await upsertBlocks(inserted.id, data.blocks, user.id)
     }
@@ -58,14 +74,17 @@ export async function saveBlog(data, { publishNow = false, toBePublishedDate = n
       await syncRelatedBlogs(inserted.id, data.relatedBlogs)
     }
     
-    return await getBlogById(inserted.id) // return hydrated
+    return await getBlogById(inserted.id)
   } else {
     const updatePayload = {
-      ...base,
+      title: base.title,
+      body: base.body,
+      template: base.template,
       cover_url,
       status,
       published_at,
-      to_be_published_date
+      to_be_published_date,
+      block_template_id: base.block_template_id
     }
     const { data: updated, error } = await supabase
       .from('blogs')
@@ -81,7 +100,6 @@ export async function saveBlog(data, { publishNow = false, toBePublishedDate = n
     if (Array.isArray(data.relatedBlogs)) {
       await syncRelatedBlogs(updated.id, data.relatedBlogs)
     }
-    // Only sync blocks if caller provided blocks
     if (Array.isArray(data.blocks)) {
       await syncBlocks(updated.id, data.blocks, user.id)
     }
@@ -114,7 +132,7 @@ export async function deleteBlog(id) {
 export async function listOwnBlogs() {
   const { data, error } = await supabase
     .from('blogs')
-    .select('id, title, slug, status, template, cover_url, created_at, updated_at, published_at, selection, to_be_published_date')
+    .select('id, title, slug, status, template, cover_url, created_at, updated_at, published_at, selection, to_be_published_date, block_template_id')
     .order('updated_at', { ascending: false })
   if (error) throw error
   return data
@@ -123,7 +141,7 @@ export async function listOwnBlogs() {
 export async function listPublishedBlogs({ limit = 20, offset = 0 } = {}) {
   const { data, error } = await supabase
     .from('blogs')
-    .select('id, title, slug, cover_url, template, published_at, selection')
+    .select('id, title, slug, cover_url, template, published_at, selection, block_template_id')
     .eq('status', 'published')
     .order('published_at', { ascending: false })
     .range(offset, offset + limit - 1)
@@ -135,7 +153,7 @@ export async function listPublishedBlogsOrdered({ limit = 50, offset = 0, newest
   const createdOrder = newestFirst ? { ascending: false } : { ascending: true }
   const { data, error } = await supabase
     .from('blogs')
-    .select('id, title, slug, cover_url, template, published_at, created_at, selection')
+    .select('id, title, slug, cover_url, template, published_at, created_at, selection, block_template_id')
     .eq('status', 'published')
     .order('selection', { ascending: false })
     .order('created_at', createdOrder)
@@ -155,6 +173,11 @@ export async function getBlogById(id) {
         id,
         related_blog_id,
         position
+      ),
+      block_template:blog_block_templates!blogs_block_template_id_fkey(
+        id,
+        name,
+        code
       )
     `)
     .eq('id', id)
@@ -170,7 +193,12 @@ export async function getBlogBySlug(slug) {
       .select(`
         *, 
         blog_assets(*),
-        blog_blocks(*)
+        blog_blocks(*),
+        block_template:blog_block_templates!blogs_block_template_id_fkey(
+          id,
+          name,
+          code
+        )
       `)
       .eq('slug', slug)
       .single()
@@ -219,6 +247,75 @@ export async function updateBlogSelection(id, value) {
   return data
 }
 
+/* Block Templates CRUD */
+export async function listBlockTemplates() {
+  const { data, error } = await supabase
+    .from('blog_block_templates')
+    .select('id, name, code, description, blocks, created_at, updated_at')
+    .order('created_at', { ascending: false })
+  if (error) throw error
+  return data
+}
+
+export async function getBlockTemplateById(id) {
+  const { data, error } = await supabase
+    .from('blog_block_templates')
+    .select('id, name, code, description, blocks, created_at, updated_at')
+    .eq('id', id)
+    .single()
+  if (error) throw error
+  return data
+}
+
+export async function saveBlockTemplate(data) {
+  const userResp = await supabase.auth.getUser()
+  const user = userResp.data.user
+  if (!user) throw new Error('Not authenticated')
+
+  const payload = {
+    name: data.name?.trim(),
+    code: data.code?.trim(),
+    description: data.description || null,
+    blocks: Array.isArray(data.blocks) ? data.blocks : [],
+    created_by: user.id
+  }
+  if (!payload.name) throw new Error('Template name required')
+  if (!payload.code) throw new Error('Template code required')
+
+  if (!data.id) {
+    const { data: inserted, error } = await supabase
+      .from('blog_block_templates')
+      .insert(payload)
+      .select('*')
+      .single()
+    if (error) throw error
+    return inserted
+  } else {
+    const { data: updated, error } = await supabase
+      .from('blog_block_templates')
+      .update({
+        name: payload.name,
+        code: payload.code,
+        description: payload.description,
+        blocks: payload.blocks
+      })
+      .eq('id', data.id)
+      .select('*')
+      .single()
+    if (error) throw error
+    return updated
+  }
+}
+
+export async function deleteBlockTemplate(id) {
+  const { error } = await supabase
+    .from('blog_block_templates')
+    .delete()
+    .eq('id', id)
+  if (error) throw error
+  return true
+}
+
 /* Slug / Upload Helpers */
 async function ensureUniqueSlug(base) {
   let slug = base
@@ -247,7 +344,6 @@ async function uploadCover(file, userId, blogId) {
   return publicUrl.publicUrl
 }
 
-/* Block upload helper */
 async function uploadBlockMedia(file, blogId, mediaType) {
   const ext = file.name.split('.').pop()
   const path = `blocks/${blogId}/${mediaType}-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
@@ -341,7 +437,6 @@ async function upsertBlocks(blogId, blocks, userId) {
 }
 
 async function syncBlocks(blogId, blocks, userId) {
-  // fetch existing
   const { data: existing, error: exErr } = await supabase
     .from('blog_blocks')
     .select('id')
@@ -380,13 +475,11 @@ async function syncBlocks(blogId, blocks, userId) {
 
 async function processBlockContent(blogId, block) {
   const cloned = JSON.parse(JSON.stringify(block.content || {}))
-  // Media block file upload
   if (block.type === 'media' && cloned.mediaType === 'image' && block.content.file instanceof File) {
     const url = await uploadBlockMedia(block.content.file, blogId, 'image')
     cloned.url = url
     delete cloned.file
   }
-  // For other block types just ensure file removed
   if (cloned.file) delete cloned.file
   return cloned
 }

@@ -1,38 +1,48 @@
 <template>
-  <section>
-    <header class="list-header">
-      <h2 class="font-figtree">{{ title || 'Your Blogs' }}</h2>
-      <RouterLink class="btn" :to="{ name: 'DashboardBlogNew' }">+ New</RouterLink>
+  <section class="flex flex-col gap-6 text-slate-100">
+    <header class="mb-2 flex items-center justify-between">
+      <h2 class="text-xl font-semibold text-slate-100 font-figtree">{{ title || 'Your Blogs' }}</h2>
+      <RouterLink
+        class="rounded-md bg-indigo-600 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white shadow hover:bg-indigo-500"
+        :to="{ name: 'DashboardBlogNew' }"
+      >+ New</RouterLink>
     </header>
 
     <!-- Filters Section -->
-    <div class="filters-section">
-      <div class="filters-row">
+    <div class="rounded-xl border border-slate-700 bg-slate-800/70 p-5 backdrop-blur">
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-4 items-end">
         <!-- Search by Title -->
-        <div class="filter-group">
-          <label class="filter-label">Search</label>
-          <input 
-            v-model="filters.search" 
-            type="text" 
+        <div class="flex flex-col gap-1">
+          <label class="text-[0.65rem] font-semibold uppercase tracking-wide text-slate-400">Search</label>
+          <input
+            v-model="filters.search"
+            type="text"
             placeholder="Search by title..."
-            class="filter-input"
+            class="w-full rounded-lg border border-slate-600 bg-slate-700/80 px-3 py-2 text-sm text-slate-100 placeholder-slate-400 focus:border-slate-400 focus:bg-slate-800 focus:outline-none focus:ring focus:ring-slate-500/40"
           />
         </div>
 
         <!-- Status Filter -->
-        <div class="filter-group">
-          <label class="filter-label">Status</label>
-          <select v-model="filters.status" class="filter-select">
-            <option value="">All Status</option>
-            <option value="draft">Draft</option>
-            <option value="published">Published</option>
-          </select>
+        <div class="flex flex-col gap-1">
+          <label class="text-[0.65rem] font-semibold uppercase tracking-wide text-slate-400">Status</label>
+            <select
+              v-model="filters.status"
+              class="w-full rounded-lg border border-slate-600 bg-slate-700/80 px-3 py-2 text-sm text-slate-100 focus:border-slate-400 focus:bg-slate-800 focus:outline-none focus:ring focus:ring-slate-500/40"
+            >
+              <option value="">All Status</option>
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+            </select>
         </div>
 
         <!-- Quick Date Filters -->
-        <div class="filter-group">
-          <label class="filter-label">Quick Dates</label>
-          <select v-model="quickDateFilter" @change="onQuickDateChange" class="filter-select">
+        <div class="flex flex-col gap-1">
+          <label class="text-[0.65rem] font-semibold uppercase tracking-wide text-slate-400">Quick Dates</label>
+          <select
+            v-model="quickDateFilter"
+            @change="onQuickDateChange"
+            class="w-full rounded-lg border border-slate-600 bg-slate-700/80 px-3 py-2 text-sm text-slate-100 focus:border-slate-400 focus:bg-slate-800 focus:outline-none focus:ring focus:ring-slate-500/40"
+          >
             <option value="">All Time</option>
             <option value="7">Last 7 Days</option>
             <option value="15">Last 15 Days</option>
@@ -42,61 +52,80 @@
         </div>
 
         <!-- Clear Filters -->
-        <div class="filter-group">
-          <button @click="clearFilters" class="btn secondary small">Clear Filters</button>
+        <div class="flex flex-col gap-1">
+          <button
+            @click="clearFilters"
+            class="rounded-lg border border-slate-600 bg-slate-700/60 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-200 hover:bg-slate-600 transition-colors"
+          >
+            Clear Filters
+          </button>
         </div>
       </div>
 
-      <!-- Custom Date Range (shown when Custom Range is selected) -->
-      <div v-if="quickDateFilter === 'custom'" class="date-range-row">
-        <div class="filter-group">
-          <label class="filter-label">Start Date</label>
-          <input 
-            v-model="filters.startDate" 
-            type="date" 
-            class="filter-input"
+      <!-- Custom Date Range -->
+      <div
+        v-if="quickDateFilter === 'custom'"
+        class="mt-6 grid grid-cols-1 gap-5 border-t border-slate-700 pt-6 md:grid-cols-2"
+      >
+        <div class="flex flex-col gap-1">
+          <label class="text-[0.65rem] font-semibold uppercase tracking-wide text-slate-400">Start Date</label>
+          <input
+            v-model="filters.startDate"
+            type="date"
+            class="w-full rounded-lg border border-slate-600 bg-slate-700/80 px-3 py-2 text-sm text-slate-100 focus:border-slate-400 focus:bg-slate-800 focus:outline-none focus:ring focus:ring-slate-500/40"
           />
         </div>
-        <div class="filter-group">
-          <label class="filter-label">End Date</label>
-          <input 
-            v-model="filters.endDate" 
-            type="date" 
-            class="filter-input"
+        <div class="flex flex-col gap-1">
+          <label class="text-[0.65rem] font-semibold uppercase tracking-wide text-slate-400">End Date</label>
+          <input
+            v-model="filters.endDate"
+            type="date"
+            class="w-full rounded-lg border border-slate-600 bg-slate-700/80 px-3 py-2 text-sm text-slate-100 focus:border-slate-400 focus:bg-slate-800 focus:outline-none focus:ring focus:ring-slate-500/40"
           />
         </div>
       </div>
 
       <!-- Filter Results Count -->
-      <div class="filter-results">
-        <span class="results-text">
+      <div class="mt-6 border-t border-slate-700 pt-5">
+        <span class="text-sm text-slate-400">
           Showing {{ filteredBlogs.length }} of {{ blogs.length }} blogs
-          <span v-if="hasActiveFilters" class="active-filters-indicator">
-            (filtered)
-          </span>
+          <span
+            v-if="hasActiveFilters"
+            class="font-semibold text-blue-400"
+          >(filtered)</span>
         </span>
       </div>
     </div>
 
-    <div v-if="loading" class="loading font-poppins">Loading...</div>
+    <div v-if="loading" class="rounded-lg bg-slate-800/60 px-4 py-6 text-center text-sm text-slate-300 font-poppins">
+      Loading...
+    </div>
     <div v-else>
-      <table v-if="filteredBlogs.length" class="table-basic font-poppins">
+      <table
+        v-if="filteredBlogs.length"
+        class="w-full border-separate border-spacing-0 overflow-hidden rounded-xl bg-slate-800/70 font-poppins text-sm text-slate-200 shadow"
+      >
         <thead>
-          <tr>
-            <th style="width:42px;">TWP</th>
-            <th>Title</th>
-            <th>Status</th>
-            <th>Template</th>
-            <th>Updated</th>
-            <th>Published</th>
-            <th></th>
+          <tr class="bg-slate-900/70 text-xs uppercase tracking-wide text-slate-400">
+            <th class="px-3 py-3 text-center font-semibold">Pinned</th>
+            <th class="px-3 py-3 text-left font-semibold">Title</th>
+            <th class="px-3 py-3 text-left font-semibold">Status</th>
+            <th class="px-3 py-3 text-left font-semibold">Template</th>
+            <th class="px-3 py-3 text-left font-semibold">Updated</th>
+            <th class="px-3 py-3 text-left font-semibold">Published</th>
+            <th class="px-3 py-3 text-left font-semibold">To be published</th>
+            <th class="px-3 py-3 text-left font-semibold">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="b in filteredBlogs" :key="b.id">
-            <td style="text-align:center;">
+          <tr
+            v-for="b in filteredBlogs"
+            :key="b.id"
+            class="border-t border-slate-700/70 hover:bg-slate-700/40 transition"
+          >
+            <td class="px-3 py-3 text-center">
               <input
-                class="input-check"
+                class="h-4 w-4 cursor-pointer rounded border-slate-600 bg-slate-700 text-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-40"
                 :id="`sel-${b.id}`"
                 type="checkbox"
                 :checked="b.selection"
@@ -105,47 +134,102 @@
                 @change="onToggleSelection(b)"
               />
             </td>
-            <td>
-              <RouterLink class="link-inline" :to="{ name: 'DashboardBlogEdit', params: { id: b.id } }">
+            <td class="px-3 py-3">
+              <RouterLink
+                class="text-slate-100 underline-offset-2 hover:text-indigo-400 hover:underline"
+                :to="{ name: 'DashboardBlogEdit', params: { id: b.id } }"
+              >
                 {{ b.title }}
               </RouterLink>
             </td>
-            <td>
-              <span :class="['status-chip', b.status]">{{ b.status }}</span>
-            </td>
-            <td>{{ b.template }}</td>
-            <td>{{ formatDate(b.updated_at) }}</td>
-            <td>{{ b.published_at ? formatDate(b.published_at) : '—' }}</td>
-            <td class="actions">
-              <RouterLink class="link-inline" :to="{ name: 'PublicBlog', params: { slug: b.slug } }" target="_blank">View</RouterLink>
-              <button 
-                v-if="b.status === 'published'" 
-                class="link-inline warning-btn" 
-                :disabled="togglingIds.has(b.id)"
-                @click="confirmUnpublish(b)"
-                :title="togglingIds.has(b.id) ? 'Processing...' : 'Unpublish this blog'"
+            <td class="px-3 py-3">
+              <span
+                :class="[
+                  'inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide',
+                  b.status === 'published'
+                    ? 'bg-emerald-600/20 text-emerald-300 ring-1 ring-emerald-600/40'
+                    : 'bg-slate-600/30 text-slate-300 ring-1 ring-slate-500/40'
+                ]"
               >
-                {{ togglingIds.has(b.id) ? 'Processing...' : 'Unpublish' }}
-              </button>
-              <button class="link-inline danger-btn" @click="confirmDelete(b)">Delete</button>
-              <RouterLink class="link-inline" :to="{ name: 'DashboardBlogEdit', params: { id: b.id } }">Edit</RouterLink>
+                {{ b.status }}
+              </span>
+            </td>
+            <td class="px-3 py-3 text-slate-300">
+              {{ b.template }}
+            </td>
+            <td class="px-3 py-3 text-slate-300">
+              {{ formatDate(b.updated_at) }}
+            </td>
+            <td class="px-3 py-3 text-slate-300">
+              {{ b.published_at ? formatDate(b.published_at) : '—' }}
+            </td>
+            <td class="px-3 py-3 text-slate-300">
+              {{ b.to_be_published_date ? formatDate(b.to_be_published_date) : '—' }}
+            </td>
+            <td class="px-3 py-3">
+              <div class="flex flex-wrap gap-3 text-xs">
+                <RouterLink
+                  class="text-indigo-400 hover:text-indigo-300 underline-offset-2 hover:underline"
+                  :to="{ name: 'PublicBlog', params: { slug: b.slug } }"
+                  target="_blank"
+                >View</RouterLink>
+                <button
+                  v-if="b.status === 'published'"
+                  class="text-amber-400 hover:text-amber-300 underline-offset-2 hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+                  :disabled="togglingIds.has(b.id)"
+                  @click="confirmUnpublish(b)"
+                  :title="togglingIds.has(b.id) ? 'Processing...' : 'Unpublish this blog'"
+                >
+                  {{ togglingIds.has(b.id) ? 'Processing...' : 'Unpublish' }}
+                </button>
+                <button
+                  class="text-red-400 hover:text-red-300 underline-offset-2 hover:underline"
+                  @click="confirmDelete(b)"
+                >
+                  Delete
+                </button>
+                <RouterLink
+                  class="text-slate-300 hover:text-slate-100 underline-offset-2 hover:underline"
+                  :to="{ name: 'DashboardBlogEdit', params: { id: b.id } }"
+                >Edit</RouterLink>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
-      <div v-else-if="hasActiveFilters" class="empty font-poppins">
-        No blogs match your current filters. <button @click="clearFilters" class="link-inline">Clear filters</button> to see all blogs.
+
+      <div
+        v-else-if="hasActiveFilters"
+        class="rounded-lg bg-slate-800/60 p-6 text-sm text-slate-300 font-poppins"
+      >
+        No blogs match your current filters.
+        <button
+          @click="clearFilters"
+          class="ml-1 text-indigo-400 underline-offset-2 hover:text-indigo-300 hover:underline"
+        >Clear filters</button>
+        to see all blogs.
       </div>
-      <p v-else class="empty font-poppins">No blogs yet. Create one.</p>
+
+      <p v-else class="rounded-lg bg-slate-800/60 p-6 text-sm text-slate-300 font-poppins">
+        No blogs yet. Create one.
+      </p>
     </div>
 
     <!-- Delete Confirmation Dialog -->
-    <dialog ref="confirmDialog">
-      <form method="dialog" class="confirm-form font-poppins" @submit.prevent="performDelete">
+    <dialog ref="confirmDialog" class="rounded-xl border border-slate-700 bg-slate-800 p-6 text-slate-100 backdrop:bg-slate-950/70">
+      <form method="dialog" class="flex flex-col gap-4 font-poppins" @submit.prevent="performDelete">
         <p>Delete blog "{{ pendingDelete?.title }}"?</p>
-        <div class="btn-row">
-          <button type="button" class="btn secondary" @click="cancelDelete">Cancel</button>
-          <button type="button" class="btn" style="background:var(--color-danger); border-color:var(--color-danger);" @click="performDelete">
+        <div class="flex justify-end gap-3">
+          <button
+            type="button"
+            class="rounded-md border border-slate-600 bg-slate-700 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-100 hover:bg-slate-600"
+            @click="cancelDelete"
+          >Cancel</button>
+          <button
+            type="button"
+            class="rounded-md bg-red-600 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white hover:bg-red-500"
+            @click="performDelete"
+          >
             Delete
           </button>
         </div>
@@ -153,20 +237,30 @@
     </dialog>
 
     <!-- Unpublish Confirmation Dialog -->
-    <dialog ref="unpublishDialog">
-      <form method="dialog" class="confirm-form font-poppins" @submit.prevent="performUnpublish">
+    <dialog ref="unpublishDialog" class="rounded-xl border border-slate-700 bg-slate-800 p-6 text-slate-100 backdrop:bg-slate-950/70">
+      <form method="dialog" class="flex flex-col gap-4 font-poppins" @submit.prevent="performUnpublish">
         <p>Unpublish blog "{{ pendingUnpublish?.title }}"?</p>
-        <p class="warning-text">This will make the blog unavailable to the public and change its status to draft.</p>
-        <div class="btn-row">
-          <button type="button" class="btn secondary" @click="cancelUnpublish">Cancel</button>
-          <button type="button" class="btn warning" @click="performUnpublish">
+        <p class="text-sm text-slate-400">
+          This will make the blog unavailable to the public and change its status to draft.
+        </p>
+        <div class="flex justify-end gap-3">
+          <button
+            type="button"
+            class="rounded-md border border-slate-600 bg-slate-700 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-slate-100 hover:bg-slate-600"
+            @click="cancelUnpublish"
+          >Cancel</button>
+          <button
+            type="button"
+            class="rounded-md bg-amber-600 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-white hover:bg-amber-500"
+            @click="performUnpublish"
+          >
             Unpublish
           </button>
         </div>
       </form>
     </dialog>
 
-    <p v-if="error" class="error font-poppins">{{ error }}</p>
+    <p v-if="error" class="text-sm text-red-400 font-poppins">{{ error }}</p>
   </section>
 </template>
 
@@ -344,164 +438,3 @@ watch([() => filters.startDate, () => filters.endDate], () => {
   }
 })
 </script>
-
-<style scoped>
-.list-header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:1rem;
-}
-
-.filters-section {
-  background: var(--color-surface, #f9fafb);
-  border: 1px solid var(--color-border, #e5e7eb);
-  border-radius: 12px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.filters-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  align-items: end;
-}
-
-.date-range-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-border, #e5e7eb);
-}
-
-.filter-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-.filter-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--color-text-muted, #6b7280);
-}
-
-.filter-input,
-.filter-select {
-  padding: 0.5rem 0.75rem;
-  border: 1px solid var(--color-border, #d1d5db);
-  border-radius: 6px;
-  font-size: 0.875rem;
-  background: white;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.filter-input:focus,
-.filter-select:focus {
-  outline: none;
-  border-color: var(--color-primary, #2563eb);
-  box-shadow: 0 0 0 2px var(--color-primary-light, #dbeafe);
-}
-
-.btn.small {
-  padding: 0.5rem 0.75rem;
-  font-size: 0.75rem;
-  height: fit-content;
-}
-
-.filter-results {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--color-border, #e5e7eb);
-}
-
-.results-text {
-  font-size: 0.875rem;
-  color: var(--color-text-muted, #6b7280);
-}
-
-.active-filters-indicator {
-  font-weight: 600;
-  color: var(--color-primary, #2563eb);
-}
-
-.actions {
-  display:flex;
-  gap:.5rem;
-  flex-wrap:wrap;
-}
-.loading, .empty { padding:1rem; }
-.error { color:var(--color-danger); margin-top:1rem; }
-dialog {
-  border:1px solid var(--color-border);
-  border-radius:8px;
-  padding:1rem 1.25rem;
-  background:var(--color-surface);
-}
-.btn-row {
-  display:flex;
-  justify-content:flex-end;
-  gap:.75rem;
-  margin-top:.75rem;
-}
-.danger-btn {
-  background:none;
-  border:none;
-  padding:0;
-  cursor:pointer;
-  color:var(--color-danger);
-  font-weight:600;
-  font-size:.75rem;
-}
-.danger-btn:hover { text-decoration:underline; }
-
-.warning-btn {
-  background:none;
-  border:none;
-  padding:0;
-  cursor:pointer;
-  color:var(--color-warning, #f59e0b);
-  font-weight:600;
-  font-size:.75rem;
-}
-.warning-btn:hover { text-decoration:underline; }
-.warning-btn:disabled { 
-  opacity: 0.5; 
-  cursor: default; 
-  text-decoration: none;
-}
-
-.warning-text {
-  font-size: 0.875rem;
-  color: var(--color-text-muted, #6b7280);
-  margin: 0.5rem 0;
-}
-
-.btn.warning {
-  background: var(--color-warning, #f59e0b);
-  border-color: var(--color-warning, #f59e0b);
-  color: white;
-}
-.btn.warning:hover {
-  background: var(--color-warning-dark, #d97706);
-  border-color: var(--color-warning-dark, #d97706);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .filters-row,
-  .date-range-row {
-    grid-template-columns: 1fr;
-  }
-  
-  .actions {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-}
-</style>

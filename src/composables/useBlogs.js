@@ -7,13 +7,21 @@ import {
   getBlogBySlug,
   listPublishedBlogs,
   updateBlogSelection,
-  unpublishBlog
+  unpublishBlog,
+  listBlockTemplates,
+  getBlockTemplateById,
+  saveBlockTemplate,
+  deleteBlockTemplate
 } from '../services/blogServices'
 
 const ownBlogs = ref([])
 const currentBlog = ref(null)
 const loading = ref(false)
 const error = ref(null)
+
+/* Templates state */
+const blockTemplates = ref([])
+const currentTemplate = ref(null)
 
 export function useBlogs() {
   async function refreshOwn() {
@@ -124,6 +132,65 @@ export function useBlogs() {
     }
   }
 
+  /* Template functions */
+  async function listBlockTemplatesWrapper() {
+    try {
+      const list = await listBlockTemplates()
+      blockTemplates.value = list
+      return list
+    } catch (e) {
+      error.value = e.message
+      throw e
+    }
+  }
+
+  async function loadBlockTemplate(id) {
+    loading.value = true
+    error.value = null
+    try {
+      currentTemplate.value = await getBlockTemplateById(id)
+      return currentTemplate.value
+    } catch (e) {
+      error.value = e.message
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function saveBlockTemplateWrapper(data) {
+    loading.value = true
+    error.value = null
+    try {
+      const saved = await saveBlockTemplate(data)
+      const idx = blockTemplates.value.findIndex(t => t.id === saved.id)
+      if (idx === -1) blockTemplates.value.push(saved)
+      else blockTemplates.value[idx] = saved
+      currentTemplate.value = saved
+      return saved
+    } catch (e) {
+      error.value = e.message
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
+  async function deleteBlockTemplateWrapper(id) {
+    loading.value = true
+    error.value = null
+    try {
+      await deleteBlockTemplate(id)
+      blockTemplates.value = blockTemplates.value.filter(t => t.id !== id)
+      if (currentTemplate.value?.id === id) currentTemplate.value = null
+    } catch (e) {
+      error.value = e.message
+      throw e
+    } finally {
+      loading.value = false
+    }
+  }
+
   return {
     ownBlogs,
     currentBlog,
@@ -136,6 +203,14 @@ export function useBlogs() {
     remove,
     setBlogAsSelection,
     getBlogBySlug,
-    listPublishedBlogs
+    listPublishedBlogs,
+
+    // Templates
+    blockTemplates,
+    currentTemplate,
+    listBlockTemplates: listBlockTemplatesWrapper,
+    loadBlockTemplate,
+    saveBlockTemplate: saveBlockTemplateWrapper,
+    deleteBlockTemplate: deleteBlockTemplateWrapper
   }
 }

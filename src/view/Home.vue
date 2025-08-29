@@ -37,7 +37,7 @@
       <div class="hidden md:flex items-center space-x-8 text-[#00305699] font-poppins">
         <router-link to="/blogs" class="hover:text-[#003056] transition-colors">Blogs</router-link>
         <a href="#" class="hover:text-[#003056] transition-colors">Projects</a>
-        <a href="#" class="hover:text-[#003056] transition-colors">Framework</a>
+        <router-link to="/framework" class="hover:text-[#003056] transition-colors">Framework</router-link>
         <a href="#" class="hover:text-[#003056] transition-colors">FAQ</a>
       </div>
       
