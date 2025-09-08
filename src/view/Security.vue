@@ -224,7 +224,7 @@
   
   <script setup>
   import FooterSection from '../components/layout/FooterSection.vue'
-  import { useBookCallNavigation } from '../../composables/useBookCallNavigation'
+  import { useBookCallNavigation } from '../composables/useBookCallNavigation'
 
   const { triggerBookCall } = useBookCallNavigation()
   </script>
