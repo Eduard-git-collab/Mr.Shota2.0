@@ -1,34 +1,38 @@
 <script setup>
 import { RouterLink } from 'vue-router';
 import Brandlogo from '../../assets/logos/brandlogo.vue';
+import { useBookCallNavigation } from '../../composables/useBookCallNavigation'
+
+const { triggerBookCall } = useBookCallNavigation()
 </script>
 
 <template>
-    <header class="top-0 w-full z-50 bg-secondary fixed">
+    <header class="top-0 w-full z-50 fixed bg-[#f6f5f3]">
       <div class="w-full h-fit">
         <div class="p-2 sm:p-3">
             <div class="max-w-11/12 flex mx-auto items-center justify-between text-sm h-12 sm:h-14 md:h-16">
                 <!-- Logo Section - Responsive sizing -->
-                <div class="flex items-center justify-center gap-1 sm:gap-2 h-12 sm:h-14 md:h-16">
+                <RouterLink to="/" class="flex items-center justify-center gap-1 sm:gap-2 h-12 sm:h-14 md:h-16">
                     <!-- Logo scales with container -->
                     <div class="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12">
                         <Brandlogo bgColor="" accentColor="#28272c"/>
                     </div>
                     <!-- Brand text - responsive sizing and visibility -->
-                    <span class="text-primary font-funnel text-lg sm:text-xl md:text-2xl font-thin xs:block">
+                    <span class="text-[#28272c] font-funnel text-lg sm:text-xl md:text-2xl font-thin xs:block">
                         <span class="hidden sm:inline">Nyvo Creative</span>
                         <span class="sm:hidden">Nyvo</span>
                     </span>
-                </div>
+                </RouterLink>
                 
                 <!-- CTA Button - Responsive sizing and text -->
                 <div class="flex items-center space-x-4 font-dm">
-                    <button class="group relative inline-flex h-10 sm:h-12 md:h-[calc(48px+8px)] items-center justify-center rounded-lg sm:rounded-xl border border-dashed border-primary py-1 pl-3 sm:pl-4 md:pl-6 pr-10 sm:pr-12 md:pr-14 font-medium text-primary cursor-pointer group text-xs sm:text-sm">
+                    <button @click="triggerBookCall" class="group relative inline-flex h-10 sm:h-12 md:h-[calc(48px+8px)] items-center justify-center rounded-lg sm:rounded-xl border border-dashed border-[#28272c] py-1 pl-3 sm:pl-4 md:pl-6 pr-10 sm:pr-12 md:pr-14 font-medium text-[#28272c] cursor-pointer group text-xs sm:text-sm">
                         <!-- Button text - responsive -->
-                        <span class="z-10 pr-1 sm:pr-2 group-hover:text-secondary transition-all duration-200">
+                        <div
+                         class="z-10 pr-1 sm:pr-2 group-hover:text-[#f6f5f3] transition-all duration-200">
                             <span class="hidden sm:inline">Book a call</span>
                             <span class="sm:hidden">Call</span>
-                        </span>
+                    </div >
                         
                         <!-- Animated background - responsive sizing -->
                         <div class="absolute right-0.5 sm:right-1 inline-flex h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 items-center justify-end rounded-md sm:rounded-lg bg-accent transition-[width] group-hover:w-[calc(100%-4px)] sm:group-hover:w-[calc(100%-8px)]">

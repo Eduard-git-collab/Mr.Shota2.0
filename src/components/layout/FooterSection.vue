@@ -1,56 +1,83 @@
 <template>
-  <footer class="relative bg-primary border-t-2 border-secondary mt-0">
-    <div class="max-w-7xl mx-auto px-4 sm:px-8 py-16">
-      <div class="flex flex-col md:flex-row gap-12 md:gap-20">
-        <div class="space-y-4 max-w-md">
-          <h4 class="font-funnel font-thin text-[clamp(2rem,4vw,3rem)] text-secondary leading-none">
-            Nyvo Creative
-          </h4>
-          <p class="font-dm text-secondary/60 text-sm leading-relaxed">
-            A video‑first content engine purpose‑built for regulated FinTech. Turning knowledge into compliance‑forward proof assets that accelerate approvals.
+  <footer class="relative w-full bg-primary text-secondary overflow-hidden">
+    <!-- Background decoration -->
+    <div aria-hidden="true" class="absolute inset-0">
+      <div class="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-accent/20 to-transparent"></div>
+      <div class="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-secondary/10 to-transparent"></div>
+    </div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-16 sm:py-20 md:py-24">
+      <!-- Main footer content -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 mb-12 sm:mb-16">
+        
+        <!-- Brand section -->
+        <div class="lg:col-span-2">
+          <div class="flex items-center gap-3 mb-6">
+            <div class="w-8 h-8 sm:w-10 sm:h-10">
+              <!-- Your brand logo component here -->
+              <div class="w-full h-full rounded-lg bg-accent flex items-center justify-center">
+                <span class="text-primary font-bold text-lg">N</span>
+              </div>
+            </div>
+            <span class="font-funnel text-xl sm:text-2xl font-thin text-secondary">Nyvo Creative</span>
+          </div>
+          
+          <p class="font-dm text-secondary/80 text-base sm:text-lg leading-relaxed mb-8 max-w-md">
+            Video-first content engines for regulated FinTech. Transform expert interviews into decision-accelerating assets.
           </p>
+          
+          <!-- CTA Button -->
+          <button 
+          @click.prevent="triggerBookCall"
+            class="group relative bg-accent-bold text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-dm font-semibold text-base sm:text-lg transition-all duration-300 hover:bg-accent-strong hover:scale-105"
+          >
+            Start Your Content Engine
+            <div class="absolute inset-0 bg-white/20 rounded-xl scale-0 group-hover:scale-100 transition-transform duration-300"></div>
+          </button>
         </div>
-        <div class="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-10 font-dm">
-          <div class="space-y-4">
-            <h5 class="text-secondary/50 text-xs tracking-[0.15em] uppercase">Core</h5>
-            <ul class="space-y-2 text-sm text-secondary/70">
-              <li><a href="#sectors" class="hover:text-secondary transition-colors">Sectors</a></li>
-              <li><a href="#process" class="hover:text-secondary transition-colors">Process</a></li>
-              <li><a href="#" class="hover:text-secondary transition-colors">Approvals</a></li>
-            </ul>
-          </div>
-          <div class="space-y-4">
-            <h5 class="text-secondary/50 text-xs tracking-[0.15em] uppercase">Legal</h5>
-            <ul class="space-y-2 text-sm text-secondary/70">
-              <li><a href="#" class="hover:text-secondary transition-colors">Privacy Policy</a></li>
-              <li><a href="#" class="hover:text-secondary transition-colors">TOS</a></li>
-              <li><a href="#" class="hover:text-secondary transition-colors">Cookies Settings</a></li>
-            </ul>
-          </div>
-          <div class="space-y-4">
-            <h5 class="text-secondary/50 text-xs tracking-[0.15em] uppercase">Get Started</h5>
-            <ul class="space-y-2 text-sm text-secondary/70">
-              <li>
-                <a
-                  href="https://calendly.com/eduard-nyvocreative/30min"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="hover:text-secondary transition-colors"
-                >
-                  Book Intro Call
-                </a>
-              </li>
-            </ul>
-          </div>
+
+        <!-- Services -->
+        <div>
+          <h3 class="font-funnel font-semibold text-lg text-secondary mb-6">Services</h3>
+          <ul class="space-y-3">
+            <li><RouterLink to="/fincrime" class="font-dm text-secondary/70 hover:text-accent transition-colors">FinCrime Content</RouterLink></li>
+            <li><RouterLink to="/security" class="font-dm text-secondary/70 hover:text-accent transition-colors">Security & Privacy</RouterLink></li>
+            <li><RouterLink to="/regops" class="font-dm text-secondary/70 hover:text-accent transition-colors">RegOps Solutions</RouterLink></li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div>
+          <h3 class="font-funnel font-semibold text-lg text-secondary mb-6">Company</h3>
+          <ul class="space-y-3">
+            <li><RouterLink to="/about" class="font-dm text-secondary/70 hover:text-accent transition-colors">About</RouterLink></li>
+            <li><button @click="handleBookCall" class="font-dm text-secondary/70 hover:text-accent transition-colors text-left">Contact</button></li>
+            <li><a @click.prevent="triggerBookCall" target="_blank" rel="noopener noreferrer" class="font-dm text-secondary/70 hover:text-accent transition-colors">Book a Call</a></li>
+          </ul>
         </div>
       </div>
 
+      <!-- Bottom section -->
+      <div class="border-t border-secondary/20 pt-8">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p class="font-dm text-secondary/60 text-sm">
+            © {{ currentYear }} Nyvo Creative. All rights reserved.
+          </p>
+          
+          <div class="flex items-center gap-6">
+            <a href="#" class="font-dm text-secondary/60 hover:text-accent transition-colors text-sm">Privacy Policy</a>
+            <a href="#" class="font-dm text-secondary/60 hover:text-accent transition-colors text-sm">Terms of Service</a>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
 </template>
 
 <script setup>
-</script>
+import { computed, inject } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useBookCallNavigation } from '../../composables/useBookCallNavigation'
 
-<style scoped>
-</style>
+const { triggerBookCall } = useBookCallNavigation()
+</script>

@@ -5,28 +5,48 @@
   --font-funnel: "Funnel Sans", sans-serif; 
   --font-dm: "DM Sans", sans-serif;
 
-  /* Core palette (unchanged primaries) */
-  --color-primary: #f6f5f3;  /*28272c/    /* text on light surfaces / dark surface bg when inverted */
-  --color-secondary: #28272c;    /* light surface */
-  --color-background: #28272c;
+  /* Use CSS custom properties that we can animate */
+  --color-primary: var(--primary-color);
+  --color-secondary: var(--secondary-color);
+  --color-background: var(--background-color);
 
-  /* Accent scale (updated) */
-  --color-accent: #b8b1ff;       /* NEW base accent (slightly deeper) */
+  /* Accent scale (unchanged) */
+  --color-accent: #b8b1ff;
   --color-accent-strong: #a59dff;
   --color-accent-bold: #9389ff;
   --color-accent-soft: #e4e1ff;
 }
 
-/* Variable swapping utility for section-level inversion */
-.invert-scheme {
-  /* swap primary & secondary locally */
-  --_orig-primary: var(--color-primary);
-  --_orig-secondary: var(--color-secondary);
-  --color-primary: var(--_orig-secondary);
-  --color-secondary: var(--_orig-primary);
-  --color-background: var(--_orig-primary);
-  color: var(--color-primary);
-  background-color: var(--color-background);
+:root {
+  /* Define the actual color values */
+  --primary-color: #28272c;
+  --secondary-color: #f6f5f3;
+  --background-color: #f6f5f3;
+  
+  /* Transition only these specific properties */
+  transition: --primary-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              --secondary-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              --background-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* When inverted, swap the colors */
+:root.invert-scheme {
+  --primary-color: #f6f5f3;   /* Was secondary */
+  --secondary-color: #28272c; /* Was primary */
+  --background-color: #28272c; /* Was primary */
+}
+
+/* Ensure all elements that use these colors transition smoothly */
+[class*="bg-primary"],
+[class*="bg-secondary"], 
+[class*="bg-background"],
+[class*="text-primary"],
+[class*="text-secondary"],
+[class*="border-primary"],
+[class*="border-secondary"] {
+  transition: background-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+              border-color 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 @layer components {
@@ -53,11 +73,12 @@ body {
 .font-figtree {
   font-family:'Figtree', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", Arial, sans-serif;
 }
+
 .font-poppins {
   font-family:'Poppins', system-ui, -apple-system, BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Helvetica Neue",Arial,sans-serif;
 }
 
-/* Optional helper tokens (use if desired in future) */
+/* Optional helper tokens */
 .bg-accent-soft { background-color: var(--color-accent-soft); }
 .text-accent-strong { color: var(--color-accent-strong); }
 .border-accent-strong { border-color: var(--color-accent-strong); }
