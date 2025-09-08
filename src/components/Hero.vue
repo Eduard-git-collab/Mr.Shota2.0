@@ -33,7 +33,7 @@
           </p>
   
           <div class="mt-8 flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-            <a @click.prevent="triggerBookCall" target="_blank" rel="noopener noreferrer"
+            <a href="https://calendly.com/eduard-nyvocreative/30min" target="_blank" rel="noopener noreferrer"
             class="
             group relative inline-flex h-12 sm:h-12 md:h-12 items-center justify-center overflow-hidden
             rounded-md border border-primary bg-transparent px-6 sm:px-6 md:px-6 font-medium

@@ -8,7 +8,7 @@
             <div class="absolute -top-20 sm:-top-40 -right-12 sm:-right-24 w-[40vmax] sm:w-[60vmax] h-[40vmax] sm:h-[60vmax] rounded-full bg-accent/10 blur-2xl sm:blur-3xl"></div>
             <div class="absolute top-1/2 -left-16 sm:-left-32 w-[30vmax] sm:w-[50vmax] h-[30vmax] sm:h-[50vmax] rounded-full bg-primary/5 blur-2xl sm:blur-3xl"></div>
           </div>
-  
+
           <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-20 sm:py-24 md:py-32">
             <!-- Main flex container -->
             <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
@@ -22,7 +22,7 @@
                 <p class="font-dm text-lg sm:text-xl text-primary/80 leading-relaxed mb-12">
                   We distill a single expert interview into a <strong class="text-accent-bold">stakeholder-ready content engine</strong> that accelerates approvals across Security, Compliance, Legal, and Finance.
                 </p>
-  
+
                 <!-- Outcomes section -->
                 <div class="mb-12">
                   <h2 class="font-funnel font-semibold text-2xl text-primary mb-4">Outcomes we optimize for</h2>
@@ -30,7 +30,7 @@
                     3–6 weeks faster approvals • 15–30% shorter supplier onboarding • 12–28 staff hours saved per deal
                   </p>
                 </div>
-  
+
                 <!-- Built for section -->
                 <div class="mb-12">
                   <h2 class="font-funnel font-semibold text-2xl text-primary mb-4">Built for regulated fintech</h2>
@@ -39,7 +39,7 @@
                   </p>
                 </div>
               </div>
-  
+
               <!-- Right side - Form -->
               <div class="flex-1 lg:max-w-lg w-full">
                 <div class="bg-background/95 backdrop-blur-sm border border-accent/30 rounded-2xl p-6 sm:p-8 shadow-lg sticky top-24">
@@ -70,7 +70,7 @@
                         />
                       </div>
                     </div>
-  
+
                     <!-- Email -->
                     <div>
                       <label for="email" class="block text-sm font-medium text-primary mb-2">Work email address</label>
@@ -83,7 +83,7 @@
                         placeholder="Enter work email"
                       />
                     </div>
-  
+
                     <!-- Company name -->
                     <div>
                       <label for="company" class="block text-sm font-medium text-primary mb-2">Company name</label>
@@ -96,7 +96,7 @@
                         placeholder="Enter company name"
                       />
                     </div>
-  
+
                     <!-- Interest -->
                     <div>
                       <label class="block text-sm font-medium text-primary mb-3">What are you interested in? (pick one)</label>
@@ -116,12 +116,12 @@
                         </label>
                       </div>
                     </div>
-  
+
                     <!-- Context section -->
                     <div class="border-t border-accent/20 pt-6">
                       <h3 class="font-funnel font-semibold text-lg text-primary mb-4">Tell us about your context</h3>
                       <p class="text-sm text-primary/60 mb-6 italic">All answers are required.</p>
-  
+
                       <!-- Location -->
                       <div class="mb-4">
                         <label for="location" class="block text-sm font-medium text-primary mb-2">Location</label>
@@ -137,7 +137,7 @@
                           <option value="Other">Other</option>
                         </select>
                       </div>
-  
+
                       <!-- Company type -->
                       <div class="mb-4">
                         <label for="companyType" class="block text-sm font-medium text-primary mb-2">Which best describes you? (pick one)</label>
@@ -153,7 +153,7 @@
                           <option value="other">Other (tell us in one sentence)</option>
                         </select>
                       </div>
-  
+
                       <!-- Other description if selected -->
                       <div v-if="formData.companyType === 'other'" class="mb-4">
                         <input
@@ -164,7 +164,7 @@
                           class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                         />
                       </div>
-  
+
                       <!-- Approval slowdowns -->
                       <div class="mb-4">
                         <label class="block text-sm font-medium text-primary mb-3">Where do approvals slow down? (pick up to two)</label>
@@ -181,7 +181,7 @@
                           </label>
                         </div>
                       </div>
-  
+
                       <!-- Communication method -->
                       <div class="mb-4">
                         <label for="communication" class="block text-sm font-medium text-primary mb-2">How do you currently explain complex topics? (pick one)</label>
@@ -197,7 +197,7 @@
                           <option value="mix">A mix of docs and calls</option>
                         </select>
                       </div>
-  
+
                       <!-- Sign off stakeholders -->
                       <div class="mb-4">
                         <label class="block text-sm font-medium text-primary mb-3">Who must sign off on claims? (unlimited)</label>
@@ -213,7 +213,7 @@
                           </label>
                         </div>
                       </div>
-  
+
                       <!-- Active deals -->
                       <div class="mb-4">
                         <label for="activeDeals" class="block text-sm font-medium text-primary mb-2">How many enterprise deals or internal initiatives are active right now?</label>
@@ -230,7 +230,7 @@
                           <option value="10+">10+</option>
                         </select>
                       </div>
-  
+
                       <!-- Team availability -->
                       <div class="mb-4">
                         <label for="availability" class="block text-sm font-medium text-primary mb-2">Your team's monthly availability for this project</label>
@@ -246,7 +246,7 @@
                           <option value="more">More than 150 min</option>
                         </select>
                       </div>
-  
+
                       <!-- Optional notes -->
                       <div class="mb-4">
                         <label for="restrictions" class="block text-sm font-medium text-primary mb-2">Anything we should not show or say? (optional)</label>
@@ -260,7 +260,7 @@
                         ></textarea>
                         <div class="text-xs text-primary/50 mt-1">{{ formData.restrictions.length }} / 300</div>
                       </div>
-  
+
                       <!-- How did you hear -->
                       <div class="mb-6">
                         <label for="hearAbout" class="block text-sm font-medium text-primary mb-2">How did you hear about us?</label>
@@ -278,7 +278,7 @@
                         </select>
                       </div>
                     </div>
-  
+
                     <!-- Submit button -->
                     <div class="pt-4">
                       <button
@@ -379,40 +379,46 @@
     isSubmitting.value = true
     
     try {
-      // Prepare data for Supabase (mapping to your table structure)
+      // Prepare data for the new booking_answers table
       const submissionData = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
         company_email: formData.email,
-        full_name: `${formData.firstName} ${formData.lastName}`,
-        contact_number: '', // You might want to add a phone field or leave empty
         company_name: formData.company,
-        company_web: '', // You might want to add a website field or leave empty
-        notes: formData.restrictions,
-        q1: formData.interest,
-        q2: `Location: ${formData.location}, Type: ${formData.companyType}${formData.companyTypeOther ? ` - ${formData.companyTypeOther}` : ''}`,
-        q3: `Approval slowdowns: ${formData.approvalSlowdowns.join(', ')}, Communication: ${formData.communication}`,
-        q4: `Sign off: ${formData.signOff.join(', ')}, Active deals: ${formData.activeDeals}, Availability: ${formData.availability}, Heard about: ${formData.hearAbout}`
+        interest: formData.interest,
+        location: formData.location,
+        company_type: formData.companyType,
+        company_type_other: formData.companyTypeOther || null,
+        approval_slowdowns: formData.approvalSlowdowns,
+        communication_method: formData.communication,
+        sign_off_stakeholders: formData.signOff,
+        active_deals: formData.activeDeals,
+        team_availability: formData.availability,
+        restrictions: formData.restrictions || null,
+        how_heard: formData.hearAbout
       }
-  
-      // Insert into Supabase
+
+      console.log('Submitting form data to booking_answers:', submissionData)
+
+      // Insert into the new booking_answers table
       const { data, error } = await supabase
-        .from('form_answers')
+        .from('booking_answers')
         .insert([submissionData])
-  
+        .select()
+
       if (error) {
+        console.error('Supabase error:', error)
         throw error
       }
-  
+
       console.log('Form submitted successfully:', data)
       
-      // You could redirect to a thank you page or show a success message
-      alert('Thank you! Your form has been submitted successfully. We\'ll be in touch soon.')
-      
-      // Reset form or redirect
-      // window.location.href = '/thank-you'
+      // Redirect to Calendly upon successful submission
+      window.location.href = 'https://calendly.com/eduard-nyvocreative/30min'
       
     } catch (error) {
       console.error('Error submitting form:', error)
-      alert('There was an error submitting your form. Please try again.')
+      alert(`There was an error submitting your form: ${error.message}. Please try again.`)
     } finally {
       isSubmitting.value = false
     }
