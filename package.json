@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "generate:sitemap": "node scripts/generate-sitemap.mjs",
+    "postbuild": "npm run generate:sitemap"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.55.0",

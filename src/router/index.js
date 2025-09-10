@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { applySeo } from '../seo/applySeo.js'
 
 // Lazy imports (public/general)
 const Home = () => import('../view/Home.vue')
@@ -11,16 +12,21 @@ const RegOps = () => import('../view/RegOps.vue')
 
 const routes = [
   // Public / General
-  { path: '/', name: 'Home', component: Home },
+  { path: '/', name: 'home', component: Home },
   { path: '/about', name: 'About', component: About },
   { path: '/book', name: 'Book', component: Book }, // Add this
-  { path: '/fincrime', name: 'FinCrime', component: FinCrime },
-  { path: '/security', name: 'Privacy & Security', component: Security },
-  { path: '/regops', name: 'RegOps', component: RegOps },
+  { path: '/fincrime', name: 'fincrime', component: FinCrime },
+  { path: '/data-privacy-security', name: 'dataPrivacySecurity', component: Security },
+  { path: '/in-house-regops', name: 'inHouseRegOps', component: RegOps },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]
 
 export const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+// Apply SEO metadata on route navigation
+router.afterEach((to) => {
+  applySeo(to)
 })
