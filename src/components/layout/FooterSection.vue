@@ -41,8 +41,8 @@
           <h3 class="font-funnel font-semibold text-lg text-secondary mb-6">Services</h3>
           <ul class="space-y-3">
             <li><RouterLink to="/fincrime" class="font-dm text-secondary/70 hover:text-accent transition-colors">FinCrime Content</RouterLink></li>
-            <li><RouterLink to="/security" class="font-dm text-secondary/70 hover:text-accent transition-colors">Security & Privacy</RouterLink></li>
-            <li><RouterLink to="/regops" class="font-dm text-secondary/70 hover:text-accent transition-colors">RegOps Solutions</RouterLink></li>
+            <li><RouterLink to="/data-privacy-security" class="font-dm text-secondary/70 hover:text-accent transition-colors">Security & Privacy</RouterLink></li>
+            <li><RouterLink to="/in-house-regops" class="font-dm text-secondary/70 hover:text-accent transition-colors">RegOps Solutions</RouterLink></li>
           </ul>
         </div>
 

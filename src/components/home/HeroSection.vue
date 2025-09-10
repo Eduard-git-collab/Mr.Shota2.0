@@ -126,7 +126,7 @@ const cardData = [
     title: "Data Privacy & Security",
     description: "Make DPIA/VRM approvable: clear data‑flows, RBAC, key management, and purge timelines.",
     icon: LockIcon,
-    route: "/security"
+    route: "/data-privacy-security"
   },
   {
     category: "Secure fast internal buy-in for new controls and AI/ML rollouts—content curated specially for each stakeholder group.",
@@ -134,7 +134,7 @@ const cardData = [
     title: "In‑house RegOps",
     description: "Transform common objections into concise video answers, pre-empting compliance hurdles and paving the way for quick rollouts.",
     icon: CogIcon,
-    route: "/regops"
+    route: "/in-house-regops"
   }
 ]
 </script>
