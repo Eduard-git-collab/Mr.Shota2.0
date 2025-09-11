@@ -14,10 +14,8 @@
         <div class="lg:col-span-2">
           <div class="flex items-center gap-3 mb-6">
             <div class="w-8 h-8 sm:w-10 sm:h-10">
-              <!-- Your brand logo component here -->
-              <div class="w-full h-full rounded-lg bg-accent flex items-center justify-center">
-                <span class="text-primary font-bold text-lg">N</span>
-              </div>
+              
+              <Brandlogo bgColor="#f6f5f3" accentColor="#28272c"/>
             </div>
             <span class="font-funnel text-xl sm:text-2xl font-thin text-secondary">Nyvo Creative</span>
           </div>
@@ -78,6 +76,7 @@
 import { computed, inject } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useBookCallNavigation } from '../../composables/useBookCallNavigation'
+import Brandlogo from '../../assets/logos/brandlogo.vue'
 
 const { triggerBookCall } = useBookCallNavigation()
 </script>
