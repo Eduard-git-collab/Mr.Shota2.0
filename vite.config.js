@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [vue(), tailwindcss()],
   server: {
     allowedHosts: [
-      '337133eafa71.ngrok-free.app', 
+      '7ab4f316191a.ngrok-free.app', 
     ]
   },
 })

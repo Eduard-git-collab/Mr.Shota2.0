@@ -5,16 +5,16 @@
       <section class="relative w-full min-h-screen bg-secondary overflow-hidden">
         <!-- Background decoration -->
         <div aria-hidden="true" class="absolute inset-0">
-          <div class="absolute -top-20 sm:-top-40 -right-12 sm:-right-24 w-[40vmax] sm:w-[60vmax] h-[40vmax] sm:h-[60vmax] rounded-full bg-accent/10 blur-2xl sm:blur-3xl animate-pulse"></div>
-          <div class="absolute top-1/2 -left-16 sm:-left-32 w-[30vmax] sm:w-[50vmax] h-[30vmax] sm:h-[50vmax] rounded-full bg-primary/5 blur-2xl sm:blur-3xl animate-pulse" style="animation-delay: 1s"></div>
+          <div class="absolute -top-20 sm:-top-40 -right-12 sm:-right-24 w-[40vmax] sm:w-[60vmax] h-[40vmax] sm:h-[60vmax] rounded-full bg-accent/10 blur-2xl sm:blur-3xl"></div>
+          <div class="absolute top-1/2 -left-16 sm:-left-32 w-[30vmax] sm:w-[50vmax] h-[30vmax] sm:h-[50vmax] rounded-full bg-primary/5 blur-2xl sm:blur-3xl"></div>
         </div>
 
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-8 py-20 sm:py-24 md:py-32">
           <!-- Main flex container -->
-          <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
+          <div class="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start" v-stagger="{ delay: 150 }">
             
             <!-- Left side - Content -->
-            <div class="flex-1 lg:max-w-2xl" v-stagger="{ delay: 150 }">
+            <div class="flex-1 lg:max-w-2xl">
               <h1 class="font-funnel font-thin text-[clamp(2.5rem,6vw,4.5rem)] text-primary leading-[0.9] tracking-tight mb-6">
                 Talk to an expert
               </h1>
@@ -44,58 +44,58 @@
             <div class="flex-1 lg:max-w-lg w-full">
               <div 
                 v-reveal="{ delay: 500, direction: 'scale' }"
-                class="bg-background/95 backdrop-blur-sm border border-accent/30 rounded-2xl p-6 sm:p-8 shadow-lg sticky top-24 transition-all duration-300 hover:shadow-2xl hover:scale-[1.02]"
+                class="bg-background/95 backdrop-blur-sm border border-accent/30 rounded-2xl p-6 sm:p-8 shadow-lg sticky top-24"
               >
                 <form @submit.prevent="handleSubmit" class="space-y-6">
                   
                   <!-- Name fields -->
                   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4" v-stagger="{ delay: 100 }">
-                    <div class="group">
-                      <label for="firstName" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">First name</label>
+                    <div>
+                      <label for="firstName" class="block text-sm font-medium text-primary mb-2">First name</label>
                       <input
                         id="firstName"
                         v-model="formData.firstName"
                         type="text"
                         required
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                         placeholder="Enter first name"
                       />
                     </div>
-                    <div class="group">
-                      <label for="lastName" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">Last name</label>
+                    <div>
+                      <label for="lastName" class="block text-sm font-medium text-primary mb-2">Last name</label>
                       <input
                         id="lastName"
                         v-model="formData.lastName"
                         type="text"
                         required
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                         placeholder="Enter last name"
                       />
                     </div>
                   </div>
 
                   <!-- Email -->
-                  <div class="group" v-reveal="{ delay: 200 }">
-                    <label for="email" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">Work email address</label>
+                  <div v-reveal="{ delay: 200 }">
+                    <label for="email" class="block text-sm font-medium text-primary mb-2">Work email address</label>
                     <input
                       id="email"
                       v-model="formData.email"
                       type="email"
                       required
-                      class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                      class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                       placeholder="Enter work email"
                     />
                   </div>
 
                   <!-- Company name -->
-                  <div class="group" v-reveal="{ delay: 300 }">
-                    <label for="company" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">Company name</label>
+                  <div v-reveal="{ delay: 300 }">
+                    <label for="company" class="block text-sm font-medium text-primary mb-2">Company name</label>
                     <input
                       id="company"
                       v-model="formData.company"
                       type="text"
                       required
-                      class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                      class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                       placeholder="Enter company name"
                     />
                   </div>
@@ -104,15 +104,15 @@
                   <div v-reveal="{ delay: 400 }">
                     <label class="block text-sm font-medium text-primary mb-3">What are you interested in? (pick one)</label>
                     <div class="space-y-3" v-stagger="{ delay: 100 }">
-                      <label v-for="option in interestOptions" :key="option.value" class="flex items-start gap-3 cursor-pointer group p-3 rounded-lg transition-all duration-200 hover:bg-accent/5">
+                      <label v-for="option in interestOptions" :key="option.value" class="flex items-start gap-3 cursor-pointer">
                         <input
                           v-model="formData.interest"
                           :value="option.value"
                           type="radio"
                           required
-                          class="mt-1 w-4 h-4 text-accent border-accent/30 focus:ring-accent transition-transform group-hover:scale-110"
+                          class="mt-1 w-4 h-4 text-accent border-accent/30 focus:ring-accent"
                         />
-                        <div class="transition-transform group-hover:translate-x-1">
+                        <div>
                           <div class="font-medium text-primary">{{ option.title }}</div>
                           <div class="text-sm text-primary/60">{{ option.description }}</div>
                         </div>
@@ -126,13 +126,13 @@
                     <p class="text-sm text-primary/60 mb-6 italic">All answers are required.</p>
 
                     <!-- Location -->
-                    <div class="mb-4 group">
-                      <label for="location" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">Location</label>
+                    <div class="mb-4">
+                      <label for="location" class="block text-sm font-medium text-primary mb-2">Location</label>
                       <select
                         id="location"
                         v-model="formData.location"
                         required
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                       >
                         <option value="">Select</option>
                         <option value="EU/UK">EU/UK</option>
@@ -142,13 +142,13 @@
                     </div>
 
                     <!-- Company type -->
-                    <div class="mb-4 group">
-                      <label for="companyType" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">Which best describes you? (pick one)</label>
+                    <div class="mb-4">
+                      <label for="companyType" class="block text-sm font-medium text-primary mb-2">Which best describes you? (pick one)</label>
                       <select
                         id="companyType"
                         v-model="formData.companyType"
                         required
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                       >
                         <option value="">Select</option>
                         <option value="vendor">A software vendor selling to banks/financial institutions</option>
@@ -158,13 +158,13 @@
                     </div>
 
                     <!-- Other description if selected -->
-                    <div v-if="formData.companyType === 'other'" class="mb-4 group" v-reveal="{ delay: 100 }">
+                    <div v-if="formData.companyType === 'other'" class="mb-4" v-reveal="{ delay: 100 }">
                       <input
                         v-model="formData.companyTypeOther"
                         type="text"
                         required
                         placeholder="Please describe in one sentence"
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                       />
                     </div>
 
@@ -172,27 +172,27 @@
                     <div class="mb-4">
                       <label class="block text-sm font-medium text-primary mb-3">Where do approvals slow down? (pick up to two)</label>
                       <div class="space-y-2" v-stagger="{ delay: 80 }">
-                        <label v-for="option in approvalSlowdowns" :key="option.value" class="flex items-center gap-2 cursor-pointer group p-2 rounded transition-all duration-200 hover:bg-accent/5">
+                        <label v-for="option in approvalSlowdowns" :key="option.value" class="flex items-center gap-2 cursor-pointer">
                           <input
                             v-model="formData.approvalSlowdowns"
                             :value="option.value"
                             type="checkbox"
                             :disabled="formData.approvalSlowdowns.length >= 2 && !formData.approvalSlowdowns.includes(option.value)"
-                            class="w-4 h-4 text-accent border-accent/30 rounded focus:ring-accent disabled:opacity-50 transition-transform group-hover:scale-110"
+                            class="w-4 h-4 text-accent border-accent/30 rounded focus:ring-accent disabled:opacity-50"
                           />
-                          <span class="text-sm text-primary transition-transform group-hover:translate-x-1">{{ option.label }}</span>
+                          <span class="text-sm text-primary">{{ option.label }}</span>
                         </label>
                       </div>
                     </div>
 
                     <!-- Communication method -->
-                    <div class="mb-4 group">
-                      <label for="communication" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">How do you currently explain complex topics? (pick one)</label>
+                    <div class="mb-4">
+                      <label for="communication" class="block text-sm font-medium text-primary mb-2">How do you currently explain complex topics? (pick one)</label>
                       <select
                         id="communication"
                         v-model="formData.communication"
                         required
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                       >
                         <option value="">Select</option>
                         <option value="demos">Live demos</option>
@@ -205,26 +205,26 @@
                     <div class="mb-4">
                       <label class="block text-sm font-medium text-primary mb-3">Who must sign off on claims? (unlimited)</label>
                       <div class="space-y-2" v-stagger="{ delay: 80 }">
-                        <label v-for="option in signOffOptions" :key="option.value" class="flex items-center gap-2 cursor-pointer group p-2 rounded transition-all duration-200 hover:bg-accent/5">
+                        <label v-for="option in signOffOptions" :key="option.value" class="flex items-center gap-2 cursor-pointer">
                           <input
                             v-model="formData.signOff"
                             :value="option.value"
                             type="checkbox"
-                            class="w-4 h-4 text-accent border-accent/30 rounded focus:ring-accent transition-transform group-hover:scale-110"
+                            class="w-4 h-4 text-accent border-accent/30 rounded focus:ring-accent"
                           />
-                          <span class="text-sm text-primary transition-transform group-hover:translate-x-1">{{ option.label }}</span>
+                          <span class="text-sm text-primary">{{ option.label }}</span>
                         </label>
                       </div>
                     </div>
 
                     <!-- Active deals -->
-                    <div class="mb-4 group">
-                      <label for="activeDeals" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">How many enterprise deals or internal initiatives are active right now?</label>
+                    <div class="mb-4">
+                      <label for="activeDeals" class="block text-sm font-medium text-primary mb-2">How many enterprise deals or internal initiatives are active right now?</label>
                       <select
                         id="activeDeals"
                         v-model="formData.activeDeals"
                         required
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                       >
                         <option value="">Select</option>
                         <option value="0-2">0–2</option>
@@ -235,13 +235,13 @@
                     </div>
 
                     <!-- Team availability -->
-                    <div class="mb-4 group">
-                      <label for="availability" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">Your team's monthly availability for this project</label>
+                    <div class="mb-4">
+                      <label for="availability" class="block text-sm font-medium text-primary mb-2">Your team's monthly availability for this project</label>
                       <select
                         id="availability"
                         v-model="formData.availability"
                         required
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                       >
                         <option value="">Select</option>
                         <option value="90min">90 min recording only</option>
@@ -251,27 +251,27 @@
                     </div>
 
                     <!-- Optional notes -->
-                    <div class="mb-4 group">
-                      <label for="restrictions" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">Anything we should not show or say? (optional)</label>
+                    <div class="mb-4">
+                      <label for="restrictions" class="block text-sm font-medium text-primary mb-2">Anything we should not show or say? (optional)</label>
                       <textarea
                         id="restrictions"
                         v-model="formData.restrictions"
                         maxlength="300"
                         rows="3"
                         placeholder="Redactions, restricted metrics, customer mentions, etc."
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent resize-none transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary placeholder-primary/50 focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent resize-none"
                       ></textarea>
                       <div class="text-xs text-primary/50 mt-1">{{ formData.restrictions.length }} / 300</div>
                     </div>
 
                     <!-- How did you hear -->
-                    <div class="mb-6 group">
-                      <label for="hearAbout" class="block text-sm font-medium text-primary mb-2 transition-colors group-focus-within:text-accent">How did you hear about us?</label>
+                    <div class="mb-6">
+                      <label for="hearAbout" class="block text-sm font-medium text-primary mb-2">How did you hear about us?</label>
                       <select
                         id="hearAbout"
                         v-model="formData.hearAbout"
                         required
-                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent transition-all duration-300 focus:scale-[1.02]"
+                        class="w-full px-3 py-2 border border-accent/30 rounded-lg bg-background/50 text-primary focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent"
                       >
                         <option value="">Select</option>
                         <option value="search">Web Search</option>
@@ -296,7 +296,7 @@
                       <div class="absolute inset-0 -top-full bg-gradient-to-b from-white/20 to-transparent skew-y-12 transition-all duration-700 group-hover:top-full"></div>
                     </button>
                     
-                    <p class="text-xs text-primary/60 mt-3 text-center opacity-0 animate-fade-in" style="animation-delay: 1s">
+                    <p class="text-xs text-primary/60 mt-3 text-center">
                       By clicking <strong>"Book Intro Call"</strong>, you agree to our <strong>Privacy Policy</strong>.
                     </p>
                   </div>
@@ -451,14 +451,3 @@ if (typeof useHead !== 'undefined') {
   })
 }
 </script>
-
-<style scoped>
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fade-in 500ms ease-out forwards;
-}
-</style>

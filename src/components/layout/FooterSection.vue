@@ -14,7 +14,6 @@
         <div class="lg:col-span-2">
           <div class="flex items-center gap-3 mb-6">
             <div class="w-8 h-8 sm:w-10 sm:h-10">
-              
               <Brandlogo bgColor="#f6f5f3" accentColor="#28272c"/>
             </div>
             <span class="font-funnel text-xl sm:text-2xl font-thin text-secondary">Nyvo Creative</span>
@@ -49,7 +48,6 @@
           <h3 class="font-funnel font-semibold text-lg text-secondary mb-6">Company</h3>
           <ul class="space-y-3">
             <li><RouterLink to="/about" class="font-dm text-secondary/70 hover:text-accent transition-colors">About</RouterLink></li>
-            <li><button @click="handleBookCall" class="font-dm text-secondary/70 hover:text-accent transition-colors text-left">Contact</button></li>
             <li><a @click.prevent="triggerBookCall" target="_blank" rel="noopener noreferrer" class="font-dm text-secondary/70 hover:text-accent transition-colors">Book a Call</a></li>
           </ul>
         </div>
@@ -63,20 +61,62 @@
           </p>
           
           <div class="flex items-center gap-6">
-            <a href="#" class="font-dm text-secondary/60 hover:text-accent transition-colors text-sm">Privacy Policy</a>
-            <a href="#" class="font-dm text-secondary/60 hover:text-accent transition-colors text-sm">Terms of Service</a>
+            <button 
+              @click="openPrivacyModal" 
+              class="font-dm text-secondary/60 hover:text-accent transition-colors text-sm"
+            >
+              Privacy Policy
+            </button>
+            <button 
+              @click="openTermsModal" 
+              class="font-dm text-secondary/60 hover:text-accent transition-colors text-sm"
+            >
+              Terms of Service
+            </button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Modals -->
+    <LegalModal
+      :is-open="isPrivacyModalOpen"
+      title="Privacy & Cookie Policy"
+      :content="PRIVACY_POLICY"
+      @close="closePrivacyModal"
+    />
+
+    <LegalModal
+      :is-open="isTermsModalOpen"
+      title="Terms of Service"
+      :content="TERMS_OF_SERVICE"
+      @close="closeTermsModal"
+    />
   </footer>
 </template>
 
 <script setup>
-import { computed, inject } from 'vue'
+import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useBookCallNavigation } from '../../composables/useBookCallNavigation'
+import { useModals } from '../../composables/useModals'
+import { PRIVACY_POLICY, TERMS_OF_SERVICE } from '../../legalcontent'
 import Brandlogo from '../../assets/logos/brandlogo.vue'
+import LegalModal from '../items/LegalModal.vue'
 
 const { triggerBookCall } = useBookCallNavigation()
+const { 
+  isPrivacyModalOpen, 
+  isTermsModalOpen, 
+  openPrivacyModal, 
+  closePrivacyModal, 
+  openTermsModal, 
+  closeTermsModal 
+} = useModals()
+
+const currentYear = computed(() => new Date().getFullYear())
+
+const handleBookCall = () => {
+  triggerBookCall()
+}
 </script>

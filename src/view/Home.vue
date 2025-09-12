@@ -39,6 +39,7 @@
       />
       <BentoGrid/>
       <MomentumSection ref="momentumSectionRef"/>
+      <ProcessOverview />
     </main>
     <FooterSection />
     
@@ -51,6 +52,7 @@ import HeroSection from '../components/home/HeroSection.vue'
 import MomentumSection from '../components/home/MomentumSection.vue'
 import BentoGrid from '../components/items/BentoGrid.vue'
 import DeRiskingSection from '../components/home/DeRiskingSection.vue'
+import ProcessOverview from '../components/home/ProcessOverview.vue'
 import FooterSection from '../components/layout/FooterSection.vue'
 
 const deRiskingSectionRef = ref(null)
